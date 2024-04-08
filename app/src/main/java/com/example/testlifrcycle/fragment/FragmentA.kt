@@ -3,17 +3,12 @@ package com.example.testlifrcycle.fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import android.view.DragEvent
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -24,6 +19,7 @@ class FragmentA : Fragment() {
     private lateinit var bindingFmA : FragmentABinding
     private var lastTouchX = 0f
     private  var lastTouchY = 0f
+    private val textViewArray = ArrayList<TextView>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -57,9 +53,9 @@ class FragmentA : Fragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun createNewTextView() {
-        val textView = TextView(requireContext())
+        val textView = ZoomableTextView(requireContext())
         textView.text = "New TextView"
-
+        textViewArray.add(textView)
 
 
         textView.setOnTouchListener { v, event ->
@@ -82,22 +78,21 @@ class FragmentA : Fragment() {
                     lastTouchX = x
                     lastTouchY = y
                 }
-                MotionEvent.ACTION_UP -> {}
+                MotionEvent.ACTION_UP -> {
+                    Toast.makeText(context,"ádasdas",Toast.LENGTH_SHORT).show()
+                }
             }
             true
         }
 
+
+        textView.setOnClickListener(object : View.OnClickListener{ override fun onClick(v: View) {
+        }
+        })
+
         textView.setOnDragListener { view, dragEvent ->
             when (dragEvent.action) {
                 DragEvent.ACTION_DROP -> {
-                    // Lấy vị trí mới của TextView khi thả
-                    val x = dragEvent.x - textView.width / 2
-                    val y = dragEvent.y - textView.height / 2
-
-                    // Cập nhật vị trí mới cho TextView
-                    textView.x = x
-                    textView.y = y
-                    textView.visibility = View.VISIBLE // Hiển thị TextView sau khi thả
                     true
                 }
                 else -> false
@@ -105,8 +100,6 @@ class FragmentA : Fragment() {
         }
         bindingFmA.linear.addView(textView)
     }
-
-
 
     override fun onStart() {
         super.onStart()
