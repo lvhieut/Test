@@ -56,6 +56,7 @@ class FragmentA : Fragment() {
         val textView = ZoomableTextView(requireContext())
         textView.text = "New TextView"
         textViewArray.add(textView)
+        textView.id = View.generateViewId() // Tạo ID mới cho TextView
 
 
         textView.setOnTouchListener { v, event ->
@@ -64,6 +65,7 @@ class FragmentA : Fragment() {
 
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    Toast.makeText(context,"ádasdas",Toast.LENGTH_SHORT).show()
                     lastTouchX = x
                     lastTouchY = y
                 }
@@ -79,7 +81,7 @@ class FragmentA : Fragment() {
                     lastTouchY = y
                 }
                 MotionEvent.ACTION_UP -> {
-                    Toast.makeText(context,"ádasdas",Toast.LENGTH_SHORT).show()
+
                 }
             }
             true
@@ -98,7 +100,31 @@ class FragmentA : Fragment() {
                 else -> false
             }
         }
+
         bindingFmA.linear.addView(textView)
+
+        val textViewId = textView.id
+
+        zoomTextView(textViewId)
+        Log.d("FragmentA", "TextView ID: $textViewId")
+    }
+
+    private fun zoomTextView(textViewId: Int) {
+        // Tìm TextView trong danh sách textViewArray dựa trên ID
+        val textViewToZoom = textViewArray.find { it.id == textViewId }
+
+        // Kiểm tra xem TextView có tồn tại không
+        textViewToZoom?.let {
+            // Lấy các thông số cũ
+            val layoutParams = it.layoutParams
+            val originalWidth = layoutParams.width
+            val originalHeight = layoutParams.height
+
+            // Thay đổi kích thước của TextView
+            layoutParams.width = (originalWidth * 10).toInt() // Scale theo chiều ngang
+            layoutParams.height = (originalHeight * 10).toInt() // Scale theo chiều dọc
+            it.layoutParams = layoutParams
+        }
     }
 
     override fun onStart() {
