@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragment.FragmentB"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvfm2"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="@string/fragment_b"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/btnfm2"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:text="move to A" />
+
+        <Button
+            android:id="@+id/btnfm3"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:text="@string/show_dialog" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
